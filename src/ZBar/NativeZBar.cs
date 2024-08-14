@@ -11,6 +11,7 @@ namespace ZBar
     internal static class NativeZBar
     {
         private const string DllName = "libzbar-0";
+
         static NativeZBar()
         {
             NativeLibrary.SetDllImportResolver(typeof(ZBar).Assembly, PathResolver);
@@ -217,7 +218,7 @@ namespace ZBar
         public static extern int zbar_symbol_get_count(IntPtr symbol);
 
         /// <summary>
-        /// retrieve the number of points in the location polygon.  the
+        /// retrieve the number of points in the location polygon.the
         /// location polygon defines the image area that the symbol was
         /// extracted from.
         /// </summary>

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace ZBar
@@ -29,11 +31,19 @@ namespace ZBar
             this.type = (SymbolType)NativeZBar.zbar_symbol_get_type(symbol);
             this.quality = NativeZBar.zbar_symbol_get_quality(symbol);
             this.count = NativeZBar.zbar_symbol_get_count(symbol);
+            this.x = NativeZBar.zbar_symbol_get_loc_x(symbol, 0);
+            this.y = NativeZBar.zbar_symbol_get_loc_y(symbol, 0);
+            this.width = NativeZBar.zbar_symbol_get_loc_x(symbol, NativeZBar.zbar_symbol_get_loc_size(symbol) - 1) - this.x;
+            this.height = NativeZBar.zbar_symbol_get_loc_y(symbol, NativeZBar.zbar_symbol_get_loc_size(symbol) - 1) - this.y;
         }
 
         private string data;
         private int quality;
         private int count;
+        private int x;
+        private int y;
+        private int width;
+        private int height;
         private SymbolType type;
 
         public override string ToString()
@@ -96,9 +106,27 @@ namespace ZBar
             }
         }
 
-        #endregion Public properties
+        /// <value>
+        /// The value of the X coordinate found first.
+        /// </value>
+        public int X => this.x;
 
-     
+        /// <value>
+        /// The value of the Y coordinate found first.
+        /// </value>
+        public int Y => this.y;
+
+        /// <value>
+        /// Calculate the width by subtracting the value of the first-found X coordinate from the value of the last-found X coordinate.
+        /// /// </value>
+        public int Width => this.width;
+
+        /// <value>
+        /// Calculate the height by subtracting the value of the first-found Y coordinate from the value of the last-found Y coordinate.
+        /// </value>
+        public int Height => this.height;
+
+        #endregion Public properties
     }
 
     /// <summary>
